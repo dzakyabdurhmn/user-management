@@ -2,8 +2,10 @@ import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import { PrismaService } from './prisma.service';
+import { ValidationService } from './validation.service';
 
-@Global( )
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,7 +16,7 @@ import * as winston from 'winston';
       transports: [new winston.transports.Console()],
     }),
   ],
-  controllers: [],
-  providers: [],
+  providers: [PrismaService, ValidationService],
+  exports: [PrismaService, ValidationService],
 })
 export class CommonModule {}
