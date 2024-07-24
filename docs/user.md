@@ -8,19 +8,19 @@ Request Body :
 
 ```json
 {
-  "username" : "khannedy",
-  "password" : "rahasia",
-  "name" : "Eko Khannedy"
+  "username": "khannedy",
+  "password": "rahasia",
+  "name": "Eko Khannedy"
 }
 ```
 
-Response Body (Success) : 
+Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "username" : "khannedy",
-    "name" : "Eko Khannedy"
+  "data": {
+    "username": "khannedy",
+    "name": "Eko Khannedy"
   }
 }
 ```
@@ -29,7 +29,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Username already registered"
+  "errors": "Username already registered"
 }
 ```
 
@@ -41,8 +41,8 @@ Request Body :
 
 ```json
 {
-  "username" : "khannedy",
-  "password" : "rahasia"
+  "username": "khannedy",
+  "password": "rahasia"
 }
 ```
 
@@ -50,10 +50,10 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "username" : "khannedy",
-    "name" : "Eko Khannedy",
-    "token" : "session_id_generated"
+  "data": {
+    "username": "khannedy",
+    "name": "Eko Khannedy",
+    "token": "session_id_generated"
   }
 }
 ```
@@ -62,7 +62,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Username or password is wrong"
+  "errors": "Username or password is wrong"
 }
 ```
 
@@ -71,15 +71,16 @@ Response Body (Failed) :
 Endpoint : GET /api/users/current
 
 Headers :
+
 - Authorization: token
 
 Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "username" : "khannedy",
-    "name" : "Eko Khannedy"
+  "data": {
+    "username": "khannedy",
+    "name": "Eko Khannedy"
   }
 }
 ```
@@ -88,7 +89,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Unauthorized"
+  "errors": "Unauthorized"
 }
 ```
 
@@ -97,14 +98,15 @@ Response Body (Failed) :
 Endpoint : PATCH /api/users/current
 
 Headers :
+
 - Authorization: token
 
 Request Body :
 
 ```json
 {
-  "password" : "rahasia", // optional, if want to change password
-  "name" : "Eko Khannedy" // optional, if want to change name
+  "password": "rahasia", // optional, if want to change password
+  "name": "Eko Khannedy" // optional, if want to change name
 }
 ```
 
@@ -112,9 +114,9 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "username" : "khannedy",
-    "name" : "Eko Khannedy"
+  "data": {
+    "username": "khannedy",
+    "name": "Eko Khannedy"
   }
 }
 ```
@@ -124,12 +126,13 @@ Response Body (Success) :
 Endpoint : DELETE /api/users/current
 
 Headers :
+
 - Authorization: token
 
 Response Body (Success) :
 
 ```json
 {
-  "data" : true
+  "data": true
 }
 ```
