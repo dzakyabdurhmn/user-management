@@ -31,7 +31,7 @@ describe('UserController', () => {
 
     it('should be rejected if request is invalid', async () => {
       const response = await request(app.getHttpServer())
-        .post('/api/users')
+        .post('/api/users/register')
         .send({
           username: '',
           password: '',
@@ -44,7 +44,7 @@ describe('UserController', () => {
 
     it('should be able to register', async () => {
       const response = await request(app.getHttpServer())
-        .post('/api/users')
+        .post('/api/users/register')
         .send({
           username: 'test',
           name: 'test',
@@ -60,7 +60,7 @@ describe('UserController', () => {
   it('should be rejected should be username arledy registed', async () => {
     await testService.createUser();
     const response = await request(app.getHttpServer())
-      .post('/api/users')
+      .post('/api/users/register')
       .send({
         username: 'test',
         name: 'test',
@@ -70,5 +70,19 @@ describe('UserController', () => {
     logger.info(response.body.errors);
 
     expect(response.status).toBe(400);
+  });
+
+  it('should be able to login', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/api/users/login')
+      .send({
+        username: 'shyallllljwoi',
+        password: '123456789',
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.username).toBe('shyallllljwoi');
+    expect(response.body.data.name).toBe('swshwishwishwish');
+    expect(response.body.data.token).toBeDefined();
   });
 });

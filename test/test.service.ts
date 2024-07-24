@@ -15,6 +15,11 @@ export class TestService {
   }
 
   async createUser() {
+    await this.prisma.user.deleteMany({
+      where: {
+        username: 'test',
+      },
+    });
     await this.prisma.user.create({
       data: {
         name: 'test',
