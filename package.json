@@ -28,9 +28,13 @@
     "nest-winston": "^1.9.7",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+<<<<<<< Updated upstream
     "uuid": "^10.0.0",
     "winston": "^3.13.1",
     "zod": "^3.23.8"
+=======
+    "winston": "^3.13.1"
+>>>>>>> Stashed changes
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
