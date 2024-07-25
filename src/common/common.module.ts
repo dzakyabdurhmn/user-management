@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
@@ -6,6 +6,7 @@ import { PrismaService } from './prisma.service';
 import { ValidationService } from './validation.service';
 import { APP_FILTER } from '@nestjs/core';
 import { ErrorFilter } from './error.filter';
+import { AuthenticatedMiddleware } from './auth.middleware';
 
 @Global()
 @Module({
@@ -28,4 +29,13 @@ import { ErrorFilter } from './error.filter';
   ],
   exports: [PrismaService, ValidationService],
 })
-export class CommonModule {}
+
+/**
+ * @docs : regrestrasion auth.middleware : So this route '/api/*' 
+ * will be checked to see if a new token is returned
+ */
+export class CommonModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthenticatedMiddleware).forRoutes('/api/*');
+  }
+}
