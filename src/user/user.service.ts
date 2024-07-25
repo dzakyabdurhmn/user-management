@@ -11,7 +11,6 @@ import { Logger } from 'winston';
 import { UserValidationZodSchema } from './user.validation';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -96,17 +95,6 @@ export class UserService {
       username: user.username,
       name: user.name,
       token: user.token,
-    };
-  }
-
-  /**
-   * @docs : get user data with middleware and decorator
-   */
-
-  async get(user: User): Promise<UserResponse> {
-    return {
-      username: user.username,
-      name: user.name,
     };
   }
 }
