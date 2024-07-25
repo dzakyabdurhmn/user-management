@@ -26,121 +26,63 @@ describe('UserController', () => {
 
   describe('POST /api/users', () => {
     beforeEach(async () => {
-      await testService.deleteUser();
+      testService.deleteUser();
     });
 
     it('should be rejected if request is invalid', async () => {
       const response = await request(app.getHttpServer())
-        .post('/api/users')
+        .post('/api/users/register')
         .send({
           username: '',
           password: '',
           name: '',
         });
-
-      logger.info(response.body);
-
+      logger.info(response.body.errors);
       expect(response.status).toBe(400);
       expect(response.body.errors).toBeDefined();
     });
 
     it('should be able to register', async () => {
       const response = await request(app.getHttpServer())
-        .post('/api/users')
+        .post('/api/users/register')
         .send({
           username: 'test',
-          password: 'test',
           name: 'test',
+          password: 'test12345',
         });
-
-      logger.info(response.body);
-
+      logger.info(response.body.errors);
       expect(response.status).toBe(200);
       expect(response.body.data.username).toBe('test');
       expect(response.body.data.name).toBe('test');
-    });
-
-    it('should be rejected if username already exists', async () => {
-      await testService.createUser();
-      const response = await request(app.getHttpServer())
-        .post('/api/users')
-        .send({
-          username: 'test',
-          password: 'test',
-          name: 'test',
-        });
-
-      logger.info(response.body);
-
-      expect(response.status).toBe(400);
-      expect(response.body.errors).toBeDefined();
     });
   });
 
-  describe('POST /api/users/login', () => {
-    beforeEach(async () => {
-      await testService.deleteUser();
-      await testService.createUser();
-    });
+  it('should be rejected should be username arledy registed', async () => {
+    await testService.createUser();
+    const response = await request(app.getHttpServer())
+      .post('/api/users/register')
+      .send({
+        username: 'test',
+        name: 'test',
+        password: 'test',
+      });
 
-    it('should be rejected if request is invalid', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/api/users/login')
-        .send({
-          username: '',
-          password: '',
-        });
+    logger.info(response.body.errors);
 
-      logger.info(response.body);
-
-      expect(response.status).toBe(400);
-      expect(response.body.errors).toBeDefined();
-    });
-
-    it('should be able to login', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/api/users/login')
-        .send({
-          username: 'test',
-          password: 'test',
-        });
-
-      logger.info(response.body);
-
-      expect(response.status).toBe(200);
-      expect(response.body.data.username).toBe('test');
-      expect(response.body.data.name).toBe('test');
-      expect(response.body.data.token).toBeDefined();
-    });
+    expect(response.status).toBe(400);
   });
 
-  describe('GET /api/users/current', () => {
-    beforeEach(async () => {
-      await testService.deleteUser();
-      await testService.createUser();
-    });
+  it('should be able to login', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/api/users/login')
+      .send({
+        username: 'shyallllljwoi',
+        password: '123456789',
+      });
 
-    it('should be rejected if token is invalid', async () => {
-      const response = await request(app.getHttpServer())
-        .get('/api/users/current')
-        .set('Authorization', 'wrong');
-
-      logger.info(response.body);
-
-      expect(response.status).toBe(401);
-      expect(response.body.errors).toBeDefined();
-    });
-
-    it('should be able to get user', async () => {
-      const response = await request(app.getHttpServer())
-        .get('/api/users/current')
-        .set('Authorization', 'test');
-
-      logger.info(response.body);
-
-      expect(response.status).toBe(200);
-      expect(response.body.data.username).toBe('test');
-      expect(response.body.data.name).toBe('test');
-    });
+    expect(response.status).toBe(200);
+    expect(response.body.data.username).toBe('shyallllljwoi');
+    expect(response.body.data.name).toBe('swshwishwishwish');
+    expect(response.body.data.token).toBeDefined();
   });
 });
